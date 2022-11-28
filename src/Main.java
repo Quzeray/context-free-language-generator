@@ -1,28 +1,34 @@
-import Grammar.Grammar;
-import Grammar.ProductionRule;
-import Grammar.ProductionRules;
+import Language.Exception.LanguageException;
+import Language.Generator;
+import Language.Grammar;
+import Language.ProductionRule;
+import Language.ProductionRules;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<Character> terminals = new ArrayList<>(Collections.singletonList('a'));
-        List<Character> nonTerminals = new ArrayList<>(Collections.singletonList('S'));
+        char[] terminals = new char[]{'1', '2', '3', '4', '5', '6'};
+        char[] nonTerminals = new char[]{'S', 'T', 'F'};
 
-        ProductionRule r1 = new ProductionRule("S", "A");
-        ProductionRule r2 = new ProductionRule("S", "B");
-        ProductionRule r3 = new ProductionRule("A", "a");
-        ProductionRule r4 = new ProductionRule("B", "b");
 
-        ProductionRules rules = new ProductionRules(r1, r2, r3, r4);
+        ProductionRules rules = new ProductionRules(
+                new ProductionRule('S', "T"),
+                new ProductionRule('S', "-T"),
+                new ProductionRule('T', "F"),
+                new ProductionRule('F', "1"),
+                new ProductionRule('F', "2"));
 
-        Grammar grammar = new Grammar(terminals, nonTerminals, 'S', rules);
+        try {
+            Grammar grammar = new Grammar(terminals, nonTerminals, rules, 'S');
+            Generator generator = new Generator(grammar, 0, 5);
+            List<String> strs = generator.getStrings();
+            strs.sort(String::compareTo);
+            System.out.println(strs);
+        } catch (LanguageException e) {
+            throw new RuntimeException(e);
+        }
 
-        System.out.println(Arrays.toString(rules.getRulesByMainSymbol('S')));
-        System.out.println();
-        System.out.println(String.join("; \n", grammar.getStrings()) + '.');
+
     }
 }

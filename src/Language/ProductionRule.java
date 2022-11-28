@@ -1,16 +1,17 @@
-package Grammar;
+package Language;
+
 
 public class ProductionRule {
 
-    private final String leftSide;
+    private final char leftSide;
     private final String rightSide;
 
-    public ProductionRule(String leftSide, String rightSide) {
+    public ProductionRule(final char leftSide, final String rightSide) {
         this.leftSide = leftSide;
         this.rightSide = rightSide;
     }
 
-    public String getLeftSide() {
+    public char getLeftSide() {
         return leftSide;
     }
 
