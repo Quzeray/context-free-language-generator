@@ -5,7 +5,6 @@ import java.util.*;
 public class Generator {
     private final Grammar grammar;
     private final List<String> completedStrings;
-    private final Queue<StringBuilder> queue;
     private final int maxLength;
     private final int minLength;
 
@@ -14,7 +13,6 @@ public class Generator {
         this.maxLength = maxLength;
         this.minLength = minLength;
         completedStrings = new ArrayList<>();
-        queue = new LinkedList<>();
     }
 
     public List<String> getStrings() {
@@ -38,14 +36,13 @@ public class Generator {
 
 
         ProductionRule[] rules = grammar.getRules().getForString(String.valueOf(string));
-        int ruleCount = 0;
+        int rowsCountAllowed = rules.length - 1;
         for (ProductionRule rule : rules) {
-            ruleCount++;
+            rowsCountAllowed--;
             StringBuilder newString = string;
             if (canUseRule(string, rule)) {
-                if (ruleCount < rules.length) {
+                if (rowsCountAllowed > 0) {
                     newString = new StringBuilder(newString);
-                    System.out.println(newString);
                 }
                 parse(newString, rule);
                 useRule(newString);

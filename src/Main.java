@@ -8,16 +8,14 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        char[] terminals = new char[]{'1', '2', '3', '4', '5', '6'};
-        char[] nonTerminals = new char[]{'S', 'T', 'F'};
+        char[] terminals = new char[]{'b'};
+        char[] nonTerminals = new char[]{'S', 'B'};
 
 
         ProductionRules rules = new ProductionRules(
-                new ProductionRule('S', "T"),
-                new ProductionRule('S', "-T"),
-                new ProductionRule('T', "F"),
-                new ProductionRule('F', "1"),
-                new ProductionRule('F', "2"));
+                new ProductionRule('S', "SB"),
+                new ProductionRule('S', "B"),
+                new ProductionRule('B', "b"));
 
         try {
             Grammar grammar = new Grammar(terminals, nonTerminals, rules, 'S');

@@ -1,9 +1,15 @@
 package Language;
 
 import Language.Exception.LanguageException;
+import jdk.nashorn.internal.ir.IfNode;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @SuppressWarnings("unused")
 public class Grammar {
     private final Set<Character> nonTerminals;
@@ -49,6 +55,40 @@ public class Grammar {
     private void checkRules(ProductionRules rules) throws LanguageException {
         if (rules == null || rules.getSize() == 0){
             throw new LanguageException("Должно быть хотя бы одно правило");
+        }
+
+        List<Character> nonTerminalFromRules = Arrays.stream(rules.getAll())
+                .map(ProductionRule::getLeftSide)
+                .sorted(Character::compareTo)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<Character> nonTerminalsFromGrammar = nonTerminals.stream()
+                .sorted(Character::compareTo)
+                .collect(Collectors.toList());
+
+        if (!(nonTerminalFromRules.equals(nonTerminalsFromGrammar))) {
+            throw new LanguageException("Неверное объявление грамматики (Непредвиденные нетерминалы в правилах)");
+        }
+
+        if (rules.getSize() == 0){
+            throw new LanguageException("Должно быть хотя бы одно правило");
+        }
+
+        List<String> terminalFromRules = Arrays.stream(rules.getAll())
+                .map(p -> p.getRightSide().replaceAll("[A-Z]", ""))
+                .filter(s -> !s.equals(""))
+                .sorted(String::compareTo)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<String> terminalsFromGrammar = terminals.stream()
+                .map(String::valueOf)
+                .sorted(String::compareTo)
+                .collect(Collectors.toList());
+
+        if (!(nonTerminalFromRules.equals(nonTerminalsFromGrammar))) {
+            throw new LanguageException("Неверное объявление грамматики (Непредвиденные терминалы в правилах)");
         }
     }
 
