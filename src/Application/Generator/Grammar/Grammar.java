@@ -1,13 +1,11 @@
-package Language;
+package Application.Generator.Grammar;
 
-import Language.Exception.LanguageException;
-import jdk.nashorn.internal.ir.IfNode;
+import Application.Generator.Exception.GeneratorException;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
@@ -23,7 +21,7 @@ public class Grammar {
     }
 
     public Grammar(final char[] terminals, final char[] nonTerminals,
-                   final ProductionRules grammarRules, final char mainSymbol) throws LanguageException {
+                   final ProductionRules grammarRules, final char mainSymbol) throws GeneratorException {
         setNonTerminals(nonTerminals);
         setTerminals(terminals);
         checkRules(grammarRules);
@@ -32,29 +30,29 @@ public class Grammar {
         this.mainSymbol = mainSymbol;
     }
 
-    private void setNonTerminals(final char[] nonTerminals) throws LanguageException {
+    private void setNonTerminals(final char[] nonTerminals) throws GeneratorException {
         setChars(this.nonTerminals, "Нетерминал", nonTerminals);
     }
 
-    private void setTerminals(final char[] terminals) throws LanguageException {
+    private void setTerminals(final char[] terminals) throws GeneratorException {
         setChars(this.terminals, "Терминал", terminals);
     }
 
-    private void setChars(Set<Character> set, String type, final char[] chars) throws LanguageException {
+    private void setChars(Set<Character> set, String type, final char[] chars) throws GeneratorException {
         if (chars.length == 0) {
-            throw new LanguageException(type + "ы должны содержать хотя бы один элемент");
+            throw new GeneratorException(type + "ы должны содержать хотя бы один элемент");
         }
 
         for (char ch : chars) {
             if (!set.add(ch)) {
-                throw new LanguageException(type + " не может повторяться");
+                throw new GeneratorException(type + " не может повторяться");
             }
         }
     }
 
-    private void checkRules(ProductionRules rules) throws LanguageException {
+    private void checkRules(ProductionRules rules) throws GeneratorException {
         if (rules == null || rules.getSize() == 0){
-            throw new LanguageException("Должно быть хотя бы одно правило");
+            throw new GeneratorException("Должно быть хотя бы одно правило");
         }
 
         List<Character> nonTerminalFromRules = Arrays.stream(rules.getAll())
@@ -68,11 +66,11 @@ public class Grammar {
                 .collect(Collectors.toList());
 
         if (!(nonTerminalFromRules.equals(nonTerminalsFromGrammar))) {
-            throw new LanguageException("Неверное объявление грамматики (Непредвиденные нетерминалы в правилах)");
+            throw new GeneratorException("Неверное объявление грамматики (Непредвиденные нетерминалы в правилах)");
         }
 
         if (rules.getSize() == 0){
-            throw new LanguageException("Должно быть хотя бы одно правило");
+            throw new GeneratorException("Должно быть хотя бы одно правило");
         }
 
         List<String> terminalFromRules = Arrays.stream(rules.getAll())
@@ -88,17 +86,17 @@ public class Grammar {
                 .collect(Collectors.toList());
 
         if (!(nonTerminalFromRules.equals(nonTerminalsFromGrammar))) {
-            throw new LanguageException("Неверное объявление грамматики (Непредвиденные терминалы в правилах)");
+            throw new GeneratorException("Неверное объявление грамматики (Непредвиденные терминалы в правилах)");
         }
     }
 
-    private void checkCorrectSymbol(char symbol) throws LanguageException {
+    private void checkCorrectSymbol(char symbol) throws GeneratorException {
         if (!(symbol >= 'A' && symbol <= 'Z')) {
-            throw new LanguageException("Некорректный основной символ");
+            throw new GeneratorException("Некорректный основной символ");
         }
 
         if (!nonTerminals.contains(symbol)) {
-            throw new LanguageException("Основной символ не находится в множестве нетерминалов");
+            throw new GeneratorException("Основной символ не находится в множестве нетерминалов");
         }
     }
 

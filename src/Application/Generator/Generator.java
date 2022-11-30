@@ -1,4 +1,7 @@
-package Language;
+package Application.Generator;
+
+import Application.Generator.Grammar.Grammar;
+import Application.Generator.Grammar.ProductionRule;
 
 import java.util.*;
 

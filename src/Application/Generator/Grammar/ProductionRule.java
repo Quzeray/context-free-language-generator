@@ -1,4 +1,4 @@
-package Language;
+package Application.Generator.Grammar;
 
 
 public class ProductionRule {
