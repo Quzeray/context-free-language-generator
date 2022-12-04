@@ -1,5 +1,8 @@
 package Application.Generator.Grammar;
 
+import Application.Generator.Exception.GrammarException;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,8 +10,25 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class ProductionRules {
     private final List<ProductionRule> rules;
+
     public ProductionRules(final ProductionRule... rules) {
         this.rules = Arrays.asList(rules);
+    }
+
+    public ProductionRules(String text) throws GrammarException {
+        this.rules = new ArrayList<>();
+        try {
+            text = text.replaceAll("\\s+", "");
+            String[] textArray = text.split(",");
+            ProductionRule[] rules = new ProductionRule[textArray.length];
+            for (String s : textArray) {
+                String[] row = s.split("->");
+                this.rules.add(new ProductionRule(row[0].charAt(0), row[1]));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GrammarException("Невозможно создать грамматику с такими правилами");
+        }
     }
 
     public ProductionRule[] getBySymbol(char symbol) {

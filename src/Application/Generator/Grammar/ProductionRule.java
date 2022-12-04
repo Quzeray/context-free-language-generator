@@ -21,6 +21,6 @@ public class ProductionRule {
 
     @Override
     public String toString() {
-        return leftSide + " => " +  rightSide;
+        return leftSide + " => " + rightSide;
     }
 }

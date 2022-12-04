@@ -3,7 +3,8 @@ package Application.Generator;
 import Application.Generator.Grammar.Grammar;
 import Application.Generator.Grammar.ProductionRule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Generator {
     private final Grammar grammar;
@@ -39,13 +40,15 @@ public class Generator {
 
 
         ProductionRule[] rules = grammar.getRules().getForString(String.valueOf(string));
-        int rowsCountAllowed = rules.length - 1;
+        int newStringCountAllowed = rules.length;
+        boolean isContainsOnlyNonTerminals = String.valueOf(string).replaceAll("[A-Z]", "").length() == 0;
         for (ProductionRule rule : rules) {
-            rowsCountAllowed--;
+            newStringCountAllowed--;
             StringBuilder newString = string;
             if (canUseRule(string, rule)) {
-                if (rowsCountAllowed > 0) {
+                if (newStringCountAllowed > 0 && isContainsOnlyNonTerminals) {
                     newString = new StringBuilder(newString);
+                    System.out.println(newString);
                 }
                 parse(newString, rule);
                 useRule(newString);

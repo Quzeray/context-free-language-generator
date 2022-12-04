@@ -1,6 +1,6 @@
 package Application.Generator.Exception;
 
-public class GeneratorException extends Throwable{
+public class GeneratorException extends Throwable {
 
     public GeneratorException(String message) {
         super(message);
