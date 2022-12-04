@@ -27,7 +27,7 @@ public class ProductionRules {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new GrammarException("Невозможно создать грамматику с такими правилами");
+            throw new GrammarException("РќРµРІРѕР·РјРѕР¶РЅРѕ СЃРѕР·РґР°С‚СЊ РіСЂР°РјРјР°С‚РёРєСѓ СЃ С‚Р°РєРёРјРё РїСЂР°РІРёР»Р°РјРё");
         }
     }
 

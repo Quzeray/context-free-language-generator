@@ -32,19 +32,19 @@ public class Grammar {
 
     private void setChars(Set<Character> set, String type, final char[] chars) throws GrammarException {
         if (chars.length == 0) {
-            throw new GrammarException(type + "ы должны содержать хотя бы один элемент");
+            throw new GrammarException(type + "С‹ РґРѕР»Р¶РЅС‹ СЃРѕРґРµСЂР¶Р°С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ СЌР»РµРјРµРЅС‚");
         }
 
         for (char ch : chars) {
             if (!set.add(ch)) {
-                throw new GrammarException(type + " не может повторяться");
+                throw new GrammarException(type + " РЅРµ РјРѕР¶РµС‚ РїРѕРІС‚РѕСЂСЏС‚СЊСЃСЏ");
             }
         }
     }
 
     private void checkRules(ProductionRules rules) throws GrammarException {
         if (rules == null || rules.getSize() == 0) {
-            throw new GrammarException("Должно быть хотя бы одно правило");
+            throw new GrammarException("Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРЅРѕ РїСЂР°РІРёР»Рѕ");
         }
 
         List<Character> nonTerminalFromRules = Arrays.stream(rules.getAll())
@@ -58,12 +58,12 @@ public class Grammar {
                 .collect(Collectors.toList());
 
         if (!(nonTerminalFromRules.equals(nonTerminalsFromGrammar))) {
-            throw new GrammarException("Неверное объявление грамматики (Непредвиденные нетерминалы в правилах " +
-                    "или не все нетерминалы используютсяв правилах)");
+            throw new GrammarException("РќРµРІРµСЂРЅРѕРµ РѕР±СЉСЏРІР»РµРЅРёРµ РіСЂР°РјРјР°С‚РёРєРё (РќРµРїСЂРµРґРІРёРґРµРЅРЅС‹Рµ РЅРµС‚РµСЂРјРёРЅР°Р»С‹ РІ РїСЂР°РІРёР»Р°С… " +
+                    "РёР»Рё РЅРµ РІСЃРµ РЅРµС‚РµСЂРјРёРЅР°Р»С‹ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏРІ РїСЂР°РІРёР»Р°С…)");
         }
 
         if (rules.getSize() == 0) {
-            throw new GrammarException("Должно быть хотя бы одно правило");
+            throw new GrammarException("Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРЅРѕ РїСЂР°РІРёР»Рѕ");
         }
 
         List<String> terminalFromRules = Arrays.stream(rules.getAll())
@@ -79,22 +79,22 @@ public class Grammar {
                 .collect(Collectors.toList());
 
         if (!(terminalFromRules.equals(terminalsFromGrammar))) {
-            throw new GrammarException("Неверное объявление грамматики (Непредвиденные терминалы в правилах " +
-                    "или не все терминалы используютсяв правилах)");
+            throw new GrammarException("РќРµРІРµСЂРЅРѕРµ РѕР±СЉСЏРІР»РµРЅРёРµ РіСЂР°РјРјР°С‚РёРєРё (РќРµРїСЂРµРґРІРёРґРµРЅРЅС‹Рµ С‚РµСЂРјРёРЅР°Р»С‹ РІ РїСЂР°РІРёР»Р°С… " +
+                    "РёР»Рё РЅРµ РІСЃРµ С‚РµСЂРјРёРЅР°Р»С‹ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏРІ РїСЂР°РІРёР»Р°С…)");
         }
     }
 
     private void checkCorrectSymbol(String s) throws GrammarException {
         if (s.length() != 1) {
-            throw new GrammarException("В качестве основного символа может быть один и только оджин символ");
+            throw new GrammarException("Р’ РєР°С‡РµСЃС‚РІРµ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРёРјРІРѕР»Р° РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕРґРёРЅ Рё С‚РѕР»СЊРєРѕ РѕРґР¶РёРЅ СЃРёРјРІРѕР»");
         }
         char symbol = s.charAt(0);
         if (!(symbol >= 'A' && symbol <= 'Z')) {
-            throw new GrammarException("Некорректный основной символ");
+            throw new GrammarException("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕСЃРЅРѕРІРЅРѕР№ СЃРёРјРІРѕР»");
         }
 
         if (!nonTerminals.contains(symbol)) {
-            throw new GrammarException("Основной символ не находится в множестве нетерминалов");
+            throw new GrammarException("РћСЃРЅРѕРІРЅРѕР№ СЃРёРјРІРѕР» РЅРµ РЅР°С…РѕРґРёС‚СЃСЏ РІ РјРЅРѕР¶РµСЃС‚РІРµ РЅРµС‚РµСЂРјРёРЅР°Р»РѕРІ");
         }
     }
 
@@ -103,7 +103,7 @@ public class Grammar {
     }
 
     private void setNonTerminals(final char[] nonTerminals) throws GrammarException {
-        setChars(this.nonTerminals, "Нетерминал", nonTerminals);
+        setChars(this.nonTerminals, "РќРµС‚РµСЂРјРёРЅР°Р»", nonTerminals);
     }
 
     public Set<Character> getTerminals() {
@@ -111,7 +111,7 @@ public class Grammar {
     }
 
     private void setTerminals(final char[] terminals) throws GrammarException {
-        setChars(this.terminals, "Терминал", terminals);
+        setChars(this.terminals, "РўРµСЂРјРёРЅР°Р»", terminals);
     }
 
     public ProductionRules getRules() {
@@ -124,7 +124,7 @@ public class Grammar {
 
     @Override
     public String toString() {
-        return "G = (" + nonTerminals + "), " + terminals + ", P, " + mainSymbol + "), где P:\n" +
+        return "G = (" + nonTerminals + "), " + terminals + ", P, " + mainSymbol + "), РіРґРµ P:\n" +
                 grammarRules.toString();
     }
 }

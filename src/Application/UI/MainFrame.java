@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
         super.frameInit();
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Генератор цепочек языка");
+        setTitle("Р“РµРЅРµСЂР°С‚РѕСЂ С†РµРїРѕС‡РµРє СЏР·С‹РєР°");
         setIconImage(ICON.getImage());
         setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -57,12 +57,12 @@ public class MainFrame extends JFrame {
         fieldPanel.setBackground(Color.WHITE);
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
 
-        nonTerminalsTextField = createTextField("Нетерминалы", fieldPanel);
-        terminalsTextField = createTextField("Терминалы", fieldPanel);
-        mainSymbolTextField = createTextField("Основной символ", fieldPanel);
-        minLengthTextField = createTextField("Минимальная длина", fieldPanel);
-        maxLengthTextField = createTextField("Максимальная длина", fieldPanel);
-        fieldPanel.add(new JLabel("Список правил:"));
+        nonTerminalsTextField = createTextField("РќРµС‚РµСЂРјРёРЅР°Р»С‹", fieldPanel);
+        terminalsTextField = createTextField("РўРµСЂРјРёРЅР°Р»С‹", fieldPanel);
+        mainSymbolTextField = createTextField("РћСЃРЅРѕРІРЅРѕР№ СЃРёРјРІРѕР»", fieldPanel);
+        minLengthTextField = createTextField("РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°", fieldPanel);
+        maxLengthTextField = createTextField("РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°", fieldPanel);
+        fieldPanel.add(new JLabel("РЎРїРёСЃРѕРє РїСЂР°РІРёР»:"));
         productionRulesTextArea = createTextArea(fieldPanel);
 
         left.add(fieldPanel);
@@ -71,7 +71,7 @@ public class MainFrame extends JFrame {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
-        JButton generateButton = createButton("Сгенерировать", buttonPanel, this::generate);
+        JButton generateButton = createButton("РЎРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ", buttonPanel, this::generate);
         left.add(buttonPanel);
 
         return left;
@@ -152,16 +152,16 @@ public class MainFrame extends JFrame {
             Generator generator = new Generator(grammar,
                     parseInt(minLengthTextField.getText()), parseInt(maxLengthTextField.getText()));
             String strings = generator.getStrings().stream().sorted(String::compareTo).collect(Collectors.toList()).toString();
-            stringsTextArea.setText("Цепочки языка:\n" + strings.replaceAll("[\\[.+?\\]]", ""));
+            stringsTextArea.setText("Р¦РµРїРѕС‡РєРё СЏР·С‹РєР°:\n" + strings.replaceAll("[\\[.+?\\]]", ""));
 
 
         } catch (GrammarException e) {
-            JOptionPane.showMessageDialog(this.getOwner(), e.getMessage(), "Ошибка",
+            JOptionPane.showMessageDialog(this.getOwner(), e.getMessage(), "РћС€РёР±РєР°",
                     JOptionPane.WARNING_MESSAGE);
             throw new RuntimeException(e);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this.getOwner(), "Ограничиывающие значения должны быть числовыми",
-                    "Ошибка", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this.getOwner(), "РћРіСЂР°РЅРёС‡РёС‹РІР°СЋС‰РёРµ Р·РЅР°С‡РµРЅРёСЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ С‡РёСЃР»РѕРІС‹РјРё",
+                    "РћС€РёР±РєР°", JOptionPane.WARNING_MESSAGE);
         }
     }
 }
