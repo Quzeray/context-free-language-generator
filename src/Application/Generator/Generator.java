@@ -41,14 +41,12 @@ public class Generator {
 
         ProductionRule[] rules = grammar.getRules().getForString(String.valueOf(string));
         int newStringCountAllowed = rules.length;
-        boolean isContainsOnlyNonTerminals = String.valueOf(string).replaceAll("[A-Z]", "").length() == 0;
         for (ProductionRule rule : rules) {
             newStringCountAllowed--;
             StringBuilder newString = string;
             if (canUseRule(string, rule)) {
-                if (newStringCountAllowed > 0 && isContainsOnlyNonTerminals) {
+                if (newStringCountAllowed > 0) {
                     newString = new StringBuilder(newString);
-                    System.out.println(newString);
                 }
                 parse(newString, rule);
                 useRule(newString);

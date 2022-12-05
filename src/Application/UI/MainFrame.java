@@ -50,6 +50,7 @@ public class MainFrame extends JFrame {
 
     private JPanel createLeftPanel() {
         JPanel left = new JPanel();
+        left.setPreferredSize(new Dimension(300,800));
         left.setBackground(Color.WHITE);
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
 
@@ -152,7 +153,7 @@ public class MainFrame extends JFrame {
             Generator generator = new Generator(grammar,
                     parseInt(minLengthTextField.getText()), parseInt(maxLengthTextField.getText()));
             String strings = generator.getStrings().stream().sorted(String::compareTo).collect(Collectors.toList()).toString();
-            stringsTextArea.setText("Цепочки языка:\n" + strings.replaceAll("[\\[.+?\\]]", ""));
+            stringsTextArea.setText("Цепочки языка:\n" + strings.replaceAll("[\\[\\]]", ""));
 
 
         } catch (GrammarException e) {
